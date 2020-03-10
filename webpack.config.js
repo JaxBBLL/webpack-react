@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const config = {
-  port: 8088,
+  port: 4201,
   proxyServer: '',
   devPublicPath: '',
   buildPublicPath: ''
@@ -121,6 +121,7 @@ module.exports = function(env) {
           use: {
             loader: 'url-loader',
             options: {
+              esModule: false,
               limit: 8192,
               // [path][name].[ext] path是绝对路径
               name: isDev ? '[path][name].[ext]' : 'assets/[name]-[hash:5].[ext]',
@@ -139,10 +140,12 @@ module.exports = function(env) {
     devtool: isDev ? 'cheap-module-eval-source-map' : 'none',
     devServer: {
       overlay: true,
-      contentBase: resolve('dist/'),
+      contentBase: './',
       open: true,
       port: config.port,
       hot: true,
+      // 在使用单页面应用的时候，需要设置此参数，代表如果访问除根路径以外的地址，最终都会转向去请求根路径。
+      historyApiFallback: true,
       proxy: {
         '/proxyApi': {
           target: config.proxyServer,
@@ -151,7 +154,8 @@ module.exports = function(env) {
             '^/proxyApi': '/'
           }
         }
-      }
+      },
+      stats: "minimal" // 只在发生错误或有新的编译时输出
     }
   }
 
