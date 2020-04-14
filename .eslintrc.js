@@ -24,6 +24,8 @@ module.exports = {
     'react/react-in-jsx-scope': 2, //使用JSX时防止丢失React
     'space-before-function-paren': 0,
     semi: 0,
-    quotes: 0
+    quotes: 0,
+    'comma-dangle': 0,
+    'quote-props': 0
   }
 }
