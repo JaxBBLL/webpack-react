@@ -11,7 +11,7 @@ const config = {
   port: 4201,
   proxyServer: '',
   devPublicPath: '',
-  buildPublicPath: ''
+  buildPublicPath: '',
 }
 
 function resolve(dir) {
@@ -22,18 +22,20 @@ const devPlugins = [
   new webpack.HotModuleReplacementPlugin(),
   new HtmlWebpackPlugin({
     filename: resolve('dist/index.html'),
-    template: 'index.html'
-  })
+    template: 'index.html',
+  }),
 ]
 
 const buildPlugins = [
   new CleanWebpackPlugin(),
-  new CopyWebpackPlugin([
-    {
-      from: resolve('static'),
-      to: resolve('dist/static')
-    }
-  ]),
+  new CopyWebpackPlugin({
+    patterns: [
+      {
+        from: resolve('static'),
+        to: resolve('dist/static'),
+      },
+    ],
+  }),
   new HtmlWebpackPlugin({
     minify: {
       collapseWhitespace: true,
@@ -41,44 +43,44 @@ const buildPlugins = [
       removeRedundantAttributes: true,
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
-      useShortDoctype: true
+      useShortDoctype: true,
     },
     filename: resolve('dist/index.html'),
-    template: 'index.html'
+    template: 'index.html',
   }),
   new MiniCssExtractPlugin({
     filename: 'css/[name].[contenthash:5].css',
-    chunkFilename: 'css/[name].[contenthash:5].css'
+    chunkFilename: 'css/[name].[contenthash:5].css',
   }),
   new OptimizeCssAssetsPlugin({
     assetNameRegExp: /\.css$/g,
     cssProcessor: require('cssnano'),
     cssProcessorPluginOptions: {
-      preset: ['default', { discardComments: { removeAll: true } }]
+      preset: ['default', { discardComments: { removeAll: true } }],
     },
-    canPrint: true
-  })
+    canPrint: true,
+  }),
 ]
 
-module.exports = function(env) {
+module.exports = function (env) {
   const isDev = env === 'development'
   const publicPath = isDev ? config.devPublicPath : config.buildPublicPath
   const webpackConfig = {
     mode: isDev ? 'development' : 'production',
     entry: {
-      index: './src/index.js'
+      index: './src/index.js',
     },
     output: {
       path: resolve('dist'),
       filename: isDev ? '[name].js' : 'js/[name].[contenthash:5].js',
       chunkFilename: isDev ? '[name].js' : 'js/[name].[contenthash:5].js',
-      publicPath: publicPath
+      publicPath: publicPath,
     },
     resolve: {
       extensions: ['.js'],
       alias: {
-        '@': resolve('src')
-      }
+        '@': resolve('src'),
+      },
     },
     module: {
       rules: [
@@ -86,12 +88,12 @@ module.exports = function(env) {
           enforce: 'pre',
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'eslint-loader'
+          loader: 'eslint-loader',
         },
         {
           test: /\.js$/,
           use: 'babel-loader',
-          exclude: /node_modules/
+          exclude: /node_modules/,
         },
         {
           test: /\.css$/,
@@ -99,10 +101,10 @@ module.exports = function(env) {
             isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
-              options: { importLoaders: 1 }
+              options: { importLoaders: 1 },
             },
-            'postcss-loader'
-          ]
+            'postcss-loader',
+          ],
         },
         {
           test: /\.less$/,
@@ -110,11 +112,11 @@ module.exports = function(env) {
             isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
-              options: { importLoaders: 2 }
+              options: { importLoaders: 2 },
             },
             'postcss-loader',
-            'less-loader'
-          ]
+            'less-loader',
+          ],
         },
         {
           test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf)(\?.*)?$/i,
@@ -126,16 +128,16 @@ module.exports = function(env) {
               // [path][name].[ext] path是绝对路径
               name: isDev ? '[path][name].[ext]' : 'assets/[name]-[hash:5].[ext]',
               publicPath: publicPath,
-              outputPath: ''
-            }
-          }
-        }
-      ]
+              outputPath: '',
+            },
+          },
+        },
+      ],
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(env)
-      })
+        'process.env.NODE_ENV': JSON.stringify(env),
+      }),
     ].concat(isDev ? devPlugins : buildPlugins),
     devtool: isDev ? 'cheap-module-eval-source-map' : 'none',
     devServer: {
@@ -151,12 +153,12 @@ module.exports = function(env) {
           target: config.proxyServer,
           changeOrigin: true,
           pathRewrite: {
-            '^/proxyApi': '/'
-          }
-        }
+            '^/proxyApi': '/',
+          },
+        },
       },
-      stats: "minimal" // 只在发生错误或有新的编译时输出
-    }
+      stats: 'minimal', // 只在发生错误或有新的编译时输出
+    },
   }
 
   if (!isDev) {
@@ -173,17 +175,17 @@ module.exports = function(env) {
             compress: {
               drop_console: true,
               drop_debugger: true,
-              pure_funcs: ['console.log']
-            }
-          }
-        })
+              pure_funcs: ['console.log'],
+            },
+          },
+        }),
       ],
       splitChunks: {
-        chunks: 'all'
+        chunks: 'all',
       },
       runtimeChunk: {
-        name: 'manifest'
-      }
+        name: 'manifest',
+      },
     }
   }
   return webpackConfig
