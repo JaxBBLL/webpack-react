@@ -1,0 +1,33 @@
+.m-modal-wrap {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 10, 0.5);
+  align-items: center;
+  justify-content: center;
+  &.in {
+    display: flex;
+  }
+  .content {
+    position: relative;
+    background: #fff;
+    padding: 10px;
+  }
+  .close {
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+  }
+}
