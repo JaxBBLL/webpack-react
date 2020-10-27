@@ -8,13 +8,26 @@
   background: rgba(10, 10, 10, 0.5);
   align-items: center;
   justify-content: center;
+
   &.in {
     display: flex;
+  }
+  &.fade {
+    .content {
+      opacity: 1;
+      transform: translateY(0px);
+    }
   }
   .content {
     position: relative;
     background: #fff;
     padding: 10px;
+    min-height: 200px;
+    min-width: 200px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.3s;
+    transform: translateY(-20px);
   }
   .close {
     position: absolute;

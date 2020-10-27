@@ -1,17 +1,24 @@
 import React from 'react'
 import './index.less'
 
-export default function ({ visible, onCancel }) {
-  const onClick = (e) => {
-    onCancel()
-  }
+export default function (props) {
+  const { visible, onCancel } = props
+  const modalRef = React.createRef()
+  React.useEffect(() => {
+    const ele = modalRef.current
+    if (visible) {
+      ele.offsetHeight && ele.classList.add('fade')
+    } else {
+      ele.offsetHeight && ele.classList.remove('fade')
+    }
+  }, [visible])
   return (
-    <div className={visible ? 'm-modal-wrap in' : 'm-modal-wrap'}>
+    <div ref={modalRef} className={visible ? 'm-modal-wrap in' : 'm-modal-wrap'}>
       <div className="content">
-        <span className="close" onClick={onClick}>
+        <span className="close" onClick={onCancel}>
           &times;
         </span>
-        lorem...lorem...lorem...lorem...lorem...lorem...lorem...lorem...lorem...lorem...lorem...lorem...lorem...
+        {props.children}
       </div>
     </div>
   )
