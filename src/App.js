@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import routes, { RouteWithSubRoutes } from './routes'
-import './App.less'
+import '@/styles/global.css'
 
 export default class App extends Component {
   render() {

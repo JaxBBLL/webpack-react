@@ -1,21 +1,21 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true,
-    node: true
+    es2021: true,
+    node: true,
   },
   extends: ['standard'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
   },
   parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
-    ecmaVersion: 2018,
-    sourceType: 'module'
+    ecmaVersion: 2021,
+    sourceType: 'module',
   },
   plugins: ['react'],
   rules: {
@@ -26,6 +26,6 @@ module.exports = {
     semi: 0,
     quotes: 0,
     'comma-dangle': 0,
-    'quote-props': 0
-  }
+    'quote-props': 0,
+  },
 }

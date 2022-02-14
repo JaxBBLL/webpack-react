@@ -5,13 +5,14 @@ module.exports = {
       {
         useBuiltIns: 'usage',
         modules: false,
-        corejs: 3 // 声明corejs版本
-      }
+        corejs: 3, // 声明corejs版本
+        loose: true,
+      },
     ],
-    '@babel/preset-react'
+    '@babel/preset-react',
   ],
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
-    ['@babel/plugin-proposal-class-properties', { loose: true }]
-  ]
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
+  ],
 }

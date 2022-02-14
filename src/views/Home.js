@@ -10,7 +10,7 @@ export default function Home() {
       <div>
         <h1 className="text-xl my-2">Home</h1>
         <button
-          className="px-4 py-2 bg-primary text-white border focus:outline-none"
+          className="px-4 py-2 bg-purple-500 text-white border focus:outline-none"
           type="button"
           onClick={() => (visible = setVisible(true))}
         >
